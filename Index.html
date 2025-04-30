@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>刘杨史工作室 - 多格漫画</title>
+    <style>
+        body {
+            background-color: #f5f5f5;
+            font-family: "Microsoft YaHei", sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin: 30px 0 20px;
+        }
+
+        .comic-container {
+            display: flex;
+            overflow-x: auto;
+            gap: 15px;
+            padding: 0 20px 20px;
+            margin-bottom: 40px;
+        }
+
+        .comic-container img {
+            width: 250px; /* 单张图片宽度 */
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            object-fit: contain;
+        }
+
+        /* 响应式：在小屏幕设备上显示一张全宽 */
+        @media (max-width: 600px) {
+            .comic-container {
+                flex-direction: column;
+                overflow-y: auto;
+                overflow-x: hidden;
+            }
+            .comic-container img {
+                width: 90vw;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>刘杨史工作室</h1>
+
+    <!-- 多格漫画图片容器 -->
+    <div class="comic-container">
+        <!-- 输入路径：请依次替换下方图片路径 -->
+        <img src="输入路径" alt="漫画第1帧">
+        <img src="输入路径" alt="漫画第2帧">
+        <img src="输入路径" alt="漫画第3帧">
+        <!-- 可继续添加更多图片 -->
+    </div>
+
+</body>
+</html>
