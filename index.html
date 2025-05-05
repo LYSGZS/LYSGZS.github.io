@@ -19,30 +19,24 @@
 
         .comic-container {
             display: flex;
-            overflow-x: auto;
+            flex-direction: column;
             gap: 15px;
             padding: 0 20px 20px;
             margin-bottom: 40px;
         }
 
         .comic-container img {
-            width: 250px; /* 单张图片宽度 */
+            width: 90vw; /* 图片宽度设置为视口宽度的90% */
             height: auto;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0,0,0,0.2);
             object-fit: contain;
         }
 
-        /* 响应式：在小屏幕设备上显示一张全宽 */
-        @media (max-width: 600px) {
-            .comic-container {
-                flex-direction: column;
-                overflow-y: auto;
-                overflow-x: hidden;
-            }
+        /* 响应式：在所有设备上均采用垂直布局 */
+        @media (min-width: 600px) {
             .comic-container img {
-                width: 90vw;
-                margin-bottom: 15px;
+                width: 70vw; /* 在大屏幕上适当缩小图片宽度 */
             }
         }
     </style>
@@ -58,6 +52,7 @@
         <img src="IMG_4763.jpeg" alt="漫画第2帧">
         <img src="IMG_4764.jpeg" alt="漫画第3帧">
         <img src="IMG_4765.jpeg" alt="漫画第4帧">
+        <!-- 可继续添加更多图片 -->
     </div>
 
 </body>
