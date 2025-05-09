@@ -18,11 +18,9 @@
         }
 
         .comic-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
             padding: 0 20px 20px;
             margin-bottom: 40px;
+            text-align: center; /* 新增：确保图片居中 */
         }
 
         .comic-container img {
@@ -30,10 +28,9 @@
             height: auto;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0,0,0,0.2);
-            object-fit: contain;
+            margin: auto; /* 新增：确保图片水平居中 */
         }
 
-        /* 响应式：在所有设备上均采用垂直布局 */
         @media (min-width: 600px) {
             .comic-container img {
                 width: 70vw; /* 在大屏幕上适当缩小图片宽度 */
@@ -48,10 +45,9 @@
     <!-- 多格漫画图片容器 -->
     <div class="comic-container">
         <!-- 输入路径：请依次替换下方图片路径 -->
-        <img src="IMG_4697.jpeg" alt="漫画第1帧">
-        <img src="IMG_4763.jpeg" alt="漫画第2帧">
-        <img src="IMG_4764.jpeg" alt="漫画第3帧">
-        <img src="IMG_4765.jpeg" alt="漫画第4帧">
+        <img src="输入路径" alt="漫画第1帧">
+        <img src="输入路径" alt="漫画第2帧">
+        <img src="输入路径" alt="漫画第3帧">
         <!-- 可继续添加更多图片 -->
     </div>
 
