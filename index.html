@@ -55,3 +55,179 @@
 
 </body>
 </html>
+
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>杨史工作室 - 实时聊天室</title>
+  <style>
+    body {
+      font-family: "Microsoft YaHei", sans-serif;
+      background: #f4f6f9;
+      margin: 0;
+      padding: 20px;
+    }
+    .chat-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+    .chat-header {
+      background: #1a73e8;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 1.2em;
+    }
+    .chat-body {
+      height: 400px;
+      overflow-y: auto;
+      padding: 10px;
+      background: #f9f9f9;
+    }
+    .message {
+      margin: 8px 0;
+      padding: 8px 12px;
+      border-radius: 18px;
+      max-width: 80%;
+      word-wrap: break-word;
+    }
+    .user-message {
+      background: #e3f2fd;
+      margin-left: 10px;
+    }
+    .system-message {
+      text-align: center;
+      color: #666;
+      font-size: 0.9em;
+      margin: 5px 0;
+    }
+    .chat-footer {
+      display: flex;
+      padding: 10px;
+      border-top: 1px solid #ddd;
+    }
+    #nickname, #message-input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+    #send-btn {
+      padding: 10px 15px;
+      background: #1a73e8;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #send-btn:hover {
+      background: #0d47a1;
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="chat-header">杨史工作室 · 实时聊天室</div>
+    <div class="chat-body" id="chat-body"></div>
+    <div class="chat-footer">
+      <input type="text" id="nickname" placeholder="你的昵称" maxlength="20" />
+      <input type="text" id="message-input" placeholder="输入消息..." maxlength="200" />
+      <button id="send-btn">发送</button>
+    </div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+  <script>
+    // 🔥 替换为你自己的 Firebase 配置
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "your-project.firebaseapp.com",
+      databaseURL: "https://your-project-default-rtdb.firebaseio.com",
+      projectId: "your-project",
+      storageBucket: "your-project.appspot.com",
+      messagingSenderId: "123456789",
+      appId: "1:123456789:web:abc123def456"
+    };
+
+    // 初始化 Firebase
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+    const chatRef = database.ref('chat');
+
+    const chatBody = document.getElementById('chat-body');
+    const nicknameInput = document.getElementById('nickname');
+    const messageInput = document.getElementById('message-input');
+    const sendButton = document.getElementById('send-btn');
+
+    // 滚动到底部
+    function scrollToBottom() {
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    // 显示消息
+    function addMessage(data) {
+      const isSystem = data.type === 'system';
+      const messageDiv = document.createElement('div');
+      messageDiv.className = isSystem ? 'system-message' : 'message user-message';
+      if (isSystem) {
+        messageDiv.textContent = data.text;
+      } else {
+        messageDiv.innerHTML = `<strong><LaTex>${escapeHtml(data.nickname)}:</strong> $</LaTex>{escapeHtml(data.message)}`;
+      }
+      chatBody.appendChild(messageDiv);
+      scrollToBottom();
+    }
+
+    // 转义 HTML 防止 XSS
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // 从数据库加载历史消息
+    chatRef.on('child_added', (snapshot) => {
+      const data = snapshot.val();
+      addMessage(data);
+    });
+
+    // 发送消息
+    function sendMessage() {
+      const nickname = nicknameInput.value.trim() || '匿名用户';
+      const message = messageInput.value.trim();
+      if (message === '') return;
+
+      chatRef.push({
+        nickname: nickname,
+        message: message,
+        timestamp: firebase.database.ServerValue.TIMESTAMP
+      });
+
+      messageInput.value = '';
+    }
+
+    // 监听发送按钮
+    sendButton.addEventListener('click', sendMessage);
+    messageInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') sendMessage();
+    });
+
+    // 进入提示
+    chatRef.push({
+      type: 'system',
+      text: '有人加入了聊天室',
+      timestamp: firebase.database.ServerValue.TIMESTAMP
+    });
+  </script>
+</body>
+</html>
