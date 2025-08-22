@@ -4,39 +4,46 @@
     <meta charset="UTF-8">
     <title>刘杨史工作室 - 多格漫画</title>
     <style>
-        body {
-            background-color: #f5f5f5;
-            font-family: "Microsoft YaHei", sans-serif;
-            margin: 0;
-            padding: 0;
-            text-align: center;
-        }
+    body {
+        background-color: #f5f5f5;
+        font-family: "Microsoft YaHei", sans-serif;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+    }
 
-        h1 {
-            color: #333;
-            margin: 30px 0 20px;
-        }
+    h1 {
+        color: #333;
+        margin: 30px 0 20px;
+    }
 
-        .comic-container {
-            padding: 0 20px 20px;
-            margin-bottom: 40px;
-            text-align: center; /* 新增：确保图片居中 */
-        }
+    .comic-container {
+        padding: 0 20px 20px;
+        margin-bottom: 40px;
+        text-align: center;
+    }
 
+    .comic-container img {
+        width: 90vw;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        margin: auto;
+    }
+
+    @media (min-width: 600px) {
         .comic-container img {
-            width: 90vw; /* 图片宽度设置为视口宽度的90% */
-            height: auto;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.2);
-            margin: auto; /* 新增：确保图片水平居中 */
+            width: 70vw;
         }
+    }
 
-        @media (min-width: 600px) {
-            .comic-container img {
-                width: 70vw; /* 在大屏幕上适当缩小图片宽度 */
-            }
-        }
-    </style>
+    /* 聊天室标题样式 */
+    .chat-title {
+        font-size: 1.5em;
+        color: #333;
+        margin: 40px 0 10px;
+    }
+</style>
 </head>
 <body>
 
@@ -51,7 +58,21 @@
         <img src="IMG_4765.jpeg" alt="漫画第4帧">
         <img src="IMG_4809.jpeg" alt="漫画第5帧">
         <img src="IMG_4842.jpeg" alt="漫画第6帧">
+        <!-- 可继续添加更多图片 -->
     </div>
 
+    <!-- 聊天室标题 -->
+    <h2 class="chat-title">读者交流区</h2>
+
+    <!-- Telegram 聊天嵌入（示例代码） -->
+    <script async src="https://telegram.org/js/telegram-widget.js?22" 
+        data-telegram-discussion="liuyangshigongzuoshi" 
+        data-comments="5" 
+        data-desktop-width="100%" 
+        data-mobile-width="100%" 
+        data-color="1E90FF" 
+        data-dark="0">
+    </script>
+
 </body>
-</html>
+        </html>
