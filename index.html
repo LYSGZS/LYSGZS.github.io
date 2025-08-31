@@ -1,138 +1,153 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- SEO 和 Open Graph -->
-    <title>刘杨史工作室 - 多格漫画</title>
-    <meta name="description" content="刘杨史工作室原创多格漫画展示及读者交流区" />
-    <meta name="keywords" content="漫画, 多格漫画, 创作, 读者交流" />
-    <meta property="og:title" content="刘杨史工作室 - 多格漫画" />
-    <meta property="og:description" content="刘杨史工作室原创多格漫画展示及读者交流区" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://lysgzs.github.io/" />
-    <meta property="og:image" content="https://lysgzs.github.io/IMG_4697.jpeg" />
-    <meta property="og:site_name" content="刘杨史工作室" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- SEO 和 Open Graph -->
+  <title>刘杨史工作室 - 多格漫画</title>
+  <meta name="description" content="刘杨史工作室原创多格漫画展示及读者交流区" />
+  <meta name="keywords" content="漫画, 多格漫画, 创作, 读者交流" />
+  <meta property="og:title" content="刘杨史工作室 - 多格漫画" />
+  <meta property="og:description" content="刘杨史工作室原创多格漫画展示及读者交流区" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://lysgzs.github.io/" />
+  <meta property="og:image" content="https://lysgzs.github.io/IMG_4697.jpeg" />
+  <meta property="og:site_name" content="刘杨史工作室" />
 
-    <!-- 样式表 -->
-    <style>
-        body {
-            background-color: #f5f5f5;
-            font-family: "Microsoft YaHei", sans-serif;
-            margin: 0;
-            padding: 0;
-            text-align: center;
-        }
+  <!-- 样式表 -->
+  <style>
+    body {
+      background-color: #f5f5f5;
+      font-family: "Microsoft YaHei", sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
 
-        h1 {
-            color: #333;
-            margin: 30px 0 20px;
-        }
+    h1 {
+      color: #333;
+      margin: 30px 0 20px;
+    }
 
-        .comic-container {
-            padding: 0 20px 20px;
-            margin-bottom: 40px;
-            text-align: center;
-        }
+    .comic-container {
+      padding: 0 20px 20px;
+      margin-bottom: 40px;
+      text-align: center;
+    }
 
-        .comic-container img {
-            width: 90vw;
-            height: auto;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.2);
-            margin: auto;
-            display: block;
-        }
+    .comic-img {
+      width: 90vw;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      margin: auto;
+      display: block;
+      loading: lazy;
+    }
 
-        @media (min-width: 600px) {
-            .comic-container img {
-                width: 70vw;
-            }
-        }
+    @media (min-width: 600px) {
+      .comic-img {
+        width: 70vw;
+      }
+    }
 
-        .chat-title {
-            font-size: 1.5em;
-            color: #333;
-            margin: 40px 0 10px;
-        }
+    @media (min-width: 900px) {
+      .comic-img {
+        width: 50vw;
+      }
+    }
 
-        #telegram-chat {
-            background-color: #ffffff;
-            border-radius: 10px;
-            padding: 15px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-            margin: 20px auto;
-            text-align: left;
-            max-width: 600px;
-            width: 100%;
-        }
+    .chat-title {
+      font-size: 1.5em;
+      color: #333;
+      margin: 40px 0 10px;
+    }
 
-        #telegram-chat h2 {
-            font-size: 1.2em;
-            color: #333;
-            margin-bottom: 10px;
-        }
+    #telegram-chat {
+      background-color: #ffffff;
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      margin: 20px auto;
+      text-align: left;
+      max-width: 600px;
+      width: 100%;
+    }
 
-        /* 备用样式：Telegram 嵌入失败时显示文字 */
-        .telegram-fallback {
-            color: #666;
-            font-style: italic;
-            margin-top: 10px;
-        }
-    </style>
+    #telegram-chat h2 {
+      font-size: 1.2em;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .telegram-fallback {
+      color: #666;
+      font-style: italic;
+      margin-top: 10px;
+      display: none; /* 默认隐藏，加载失败时显示 */
+    }
+
+    /* 可访问性增强 */
+    [role="region"] {
+      outline: none;
+    }
+  </style>
 </head>
 <body>
 
+  <main>
     <h1>刘杨史工作室</h1>
 
     <!-- 多格漫画图片容器 -->
-    <div class="comic-container">
-        <!-- 图片路径使用绝对路径（/ 开头） -->
-        <img src="/IMG_4697.jpeg" alt="漫画第1帧">
-        <img src="/IMG_4763.jpeg" alt="漫画第2帧">
-        <img src="/IMG_4764.jpeg" alt="漫画第3帧">
-        <img src="/IMG_4765.jpeg" alt="漫画第4帧">
-        <img src="/IMG_4809.jpeg" alt="漫画第5帧">
-        <img src="/IMG_4842.jpeg" alt="漫画第6帧">
-        <!-- 可继续添加更多图片 -->
-    </div>
+    <section class="comic-container" role="region" aria-label="多格漫画展示">
+      <img src="/IMG_4697.jpeg" alt="漫画场景1：角色A在森林中发现神秘符号" class="comic-img" />
+      <img src="/IMG_4763.jpeg" alt="漫画场景2：角色B与角色A讨论符号含义" class="comic-img" />
+      <img src="/IMG_4764.jpeg" alt="漫画场景3：角色C加入团队并提出新线索" class="comic-img" />
+      <img src="/IMG_4765.jpeg" alt="漫画场景4：团队发现隐藏的密室入口" class="comic-img" />
+      <img src="/IMG_4809.jpeg" alt="漫画场景5：密室中出现危险陷阱" class="comic-img" />
+      <img src="/IMG_4842.jpeg" alt="漫画场景6：团队成功逃脱并庆祝胜利" class="comic-img" />
+    </section>
 
     <!-- 聊天室标题 -->
     <h2 class="chat-title">读者交流区</h2>
 
     <!-- Telegram 聊天嵌入（带备用方案） -->
     <div id="telegram-chat">
-        <h2>Telegram 交流群</h2>
-        <div id="telegram-widget"></div>
-        <div class="telegram-fallback">
-            如果无法加载，请点击 <a href="https://t.me/liuyangshigongzuoshi" target="_blank">这里</a> 访问 Telegram 群组。
-        </div>
-        <script>
-            // 动态加载 Telegram 脚本
-            function loadTelegramWidget() {
-                const script = document.createElement('script');
-                script.async = true;
-                script.src = "https://telegram.org/js/telegram-widget.js?22";
-                script.setAttribute("data-telegram-discussion", "liuyangshigongzuoshi");
-                script.setAttribute("data-comments", "5");
-                script.setAttribute("data-desktop-width", "100%");
-                script.setAttribute("data-mobile-width", "100%");
-                script.setAttribute("data-color", "#1E90FF");
-                script.setAttribute("data-dark", "0");
-                script.onload = () => {
-                    document.getElementById('telegram-widget').appendChild(script);
-                };
-                document.head.appendChild(script);
-            }
+      <h2>Telegram 交流群</h2>
+      <div id="telegram-widget"></div>
+      <div class="telegram-fallback">
+        如果无法加载，请点击 <a href="https://t.me/liuyangshigongzuoshi" target="_blank">这里</a> 访问 Telegram 群组。
+      </div>
+      <script>
+        // 动态加载 Telegram 脚本
+        function loadTelegramWidget() {
+          const script = document.createElement('script');
+          script.async = true;
+          script.src = "https://telegram.org/js/telegram-widget.js?22";
+          script.setAttribute("data-telegram-discussion", "liuyangshigongzuoshi");
+          script.setAttribute("data-comments", "5");
+          script.setAttribute("data-desktop-width", "100%");
+          script.setAttribute("data-mobile-width", "100%");
+          script.setAttribute("data-color", "#1E90FF");
+          script.setAttribute("data-dark", "0");
+          script.onload = () => {
+            document.getElementById('telegram-widget').appendChild(script);
+          };
+          script.onerror = () => {
+            document.querySelector('.telegram-fallback').style.display = 'block';
+          };
+          document.head.appendChild(script);
+        }
 
-            // 检查网络连接后再加载
-            if (navigator.onLine) {
-                loadTelegramWidget();
-            } else {
-                document.querySelector('.telegram-fallback').style.display = 'block';
-            }
-        </script>
+        // 检查网络连接后再加载
+        if (navigator.onLine) {
+          loadTelegramWidget();
+        } else {
+          document.querySelector('.telegram-fallback').style.display = 'block';
+        }
+      </script>
     </div>
+  </main>
 
 </body>
 </html>
