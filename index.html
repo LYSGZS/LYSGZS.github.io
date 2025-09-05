@@ -97,6 +97,12 @@
             text-align: left;
             color: #333;
         }
+
+        /* 清空按钮样式 */
+        .clear-btn {
+            text-align: right;
+            padding: 5px 10px;
+        }
     </style>
 </head>
 <body>
@@ -119,6 +125,9 @@
             <!-- 初始消息 -->
             <div class="message bot">欢迎来到刘杨史工作室聊天室！</div>
         </div>
+        <div class="clear-btn">
+            <button onclick="clearChatHistory()">清空聊天记录</button>
+        </div>
         <div class="chat-input">
             <input type="text" id="chatInput" placeholder="输入你的消息..." />
             <button onclick="sendMessage()">发送</button>
@@ -126,6 +135,19 @@
     </div>
 
     <script>
+        // 页面加载时恢复聊天记录
+        window.onload = function () {
+            const container = document.getElementById("chatMessages");
+            const history = JSON.parse(localStorage.getItem("chatHistory")) || [];
+
+            history.forEach(msg => {
+                const msgDiv = document.createElement("div");
+                msgDiv.className = "message " + msg.type;
+                msgDiv.textContent = msg.text;
+                container.appendChild(msgDiv);
+            });
+        };
+
         function sendMessage() {
             const input = document.getElementById("chatInput");
             const message = input.value.trim();
@@ -151,6 +173,15 @@
             msgDiv.textContent = text;
             container.appendChild(msgDiv);
             container.scrollTop = container.scrollHeight;
+
+            // 读取现有记录
+            let history = JSON.parse(localStorage.getItem("chatHistory")) || [];
+            // 添加新消息
+            history.push({ text, type });
+            // 限制最多保存100条记录
+            if (history.length > 100) history.shift();
+            // 保存回localStorage
+            localStorage.setItem("chatHistory", JSON.stringify(history));
         }
 
         // 回车键触发发送
@@ -159,6 +190,14 @@
                 sendMessage();
             }
         });
+
+        // 清空聊天记录
+        function clearChatHistory() {
+            if (confirm("确定要清空所有聊天记录吗？")) {
+                localStorage.removeItem("chatHistory");
+                document.getElementById("chatMessages").innerHTML = "";
+            }
+        }
     </script>
 
 </body>
