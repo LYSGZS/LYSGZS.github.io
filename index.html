@@ -1,8 +1,165 @@
-<section class="comic-container" role="region" aria-label="多格漫画展示">
-      <img src="/IMG_4697.jpeg" alt="漫画场景1：角色A在森林中发现神秘符号" class="comic-img" />
-      <img src="/IMG_4763.jpeg" alt="漫画场景2：角色B与角色A讨论符号含义" class="comic-img" />
-      <img src="/IMG_4764.jpeg" alt="漫画场景3：角色C加入团队并提出新线索" class="comic-img" />
-      <img src="/IMG_4765.jpeg" alt="漫画场景4：团队发现隐藏的密室入口" class="comic-img" />
-      <img src="/IMG_4809.jpeg" alt="漫画场景5：密室中出现危险陷阱" class="comic-img" />
-      <img src="/IMG_4842.jpeg" alt="漫画场景6：团队成功逃脱并庆祝胜利" class="comic-img" />
-</section>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>刘杨史工作室 - 多格漫画</title>
+    <style>
+        body {
+            background-color: #f5f5f5;
+            font-family: "Microsoft YaHei", sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin: 30px 0 20px;
+        }
+
+        .comic-container {
+            padding: 0 20px 20px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .comic-container img {
+            width: 90vw;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            margin: auto;
+        }
+
+        @media (min-width: 600px) {
+            .comic-container img {
+                width: 70vw;
+            }
+        }
+
+        /* 聊天室样式 */
+        .chat-container {
+            max-width: 600px;
+            margin: 0 auto 40px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .chat-messages {
+            max-height: 300px;
+            padding: 15px;
+            overflow-y: auto;
+            background: #f9f9f9;
+            border-bottom: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 10px;
+            background: #fff;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 8px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .chat-input button {
+            margin-left: 10px;
+            padding: 8px 16px;
+            border: none;
+            background: #007BFF;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .chat-input button:hover {
+            background: #0056b3;
+        }
+
+        .message {
+            margin: 5px 0;
+        }
+
+        .message.user {
+            text-align: right;
+            color: #007BFF;
+        }
+
+        .message.bot {
+            text-align: left;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>刘杨史工作室</h1>
+
+    <!-- 多格漫画图片容器 -->
+    <section class="comic-container" role="region" aria-label="多格漫画展示">
+        <img src="/IMG_4697.jpeg" alt="漫画场景1：角色A在森林中发现神秘符号" class="comic-img" />
+        <img src="/IMG_4763.jpeg" alt="漫画场景2：角色B与角色A讨论符号含义" class="comic-img" />
+        <img src="/IMG_4764.jpeg" alt="漫画场景3：角色C加入团队并提出新线索" class="comic-img" />
+        <img src="/IMG_4765.jpeg" alt="漫画场景4：团队发现隐藏的密室入口" class="comic-img" />
+        <img src="/IMG_4809.jpeg" alt="漫画场景5：密室中出现危险陷阱" class="comic-img" />
+        <img src="/IMG_4842.jpeg" alt="漫画场景6：团队成功逃脱并庆祝胜利" class="comic-img" />
+    </section>
+
+    <!-- 聊天室 -->
+    <div class="chat-container">
+        <div class="chat-messages" id="chatMessages">
+            <!-- 初始消息 -->
+            <div class="message bot">欢迎来到刘杨史工作室聊天室！</div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chatInput" placeholder="输入你的消息..." />
+            <button onclick="sendMessage()">发送</button>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            const input = document.getElementById("chatInput");
+            const message = input.value.trim();
+            if (message === "") return;
+
+            // 添加用户消息
+            addMessage(message, "user");
+
+            // 模拟机器人回复
+            setTimeout(() => {
+                const botReply = "收到消息：" + message;
+                addMessage(botReply, "bot");
+            }, 500);
+
+            input.value = "";
+            input.focus();
+        }
+
+        function addMessage(text, type) {
+            const container = document.getElementById("chatMessages");
+            const msgDiv = document.createElement("div");
+            msgDiv.className = "message " + type;
+            msgDiv.textContent = text;
+            container.appendChild(msgDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // 回车键触发发送
+        document.getElementById("chatInput").addEventListener("keydown", function (e) {
+            if (e.key === "Enter") {
+                sendMessage();
+            }
+        });
+    </script>
+
+</body>
+</html>
