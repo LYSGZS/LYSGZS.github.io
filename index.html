@@ -37,6 +37,67 @@
             }
         }
 
+        /* 小电视模块样式 */
+        .tv-container {
+            margin: 20px auto;
+            max-width: 600px;
+        }
+
+        .tv-container h3 {
+            color: #00a1d6;
+            margin-bottom: 10px;
+        }
+
+        #miniTv {
+            width: 180px;
+            height: 120px;
+            background: linear-gradient(145deg, #1a1a1a, #2c2c2c);
+            border: 3px solid #f0f0f0;
+            border-radius: 12px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+        }
+
+        #tvScreen {
+            width: 90%;
+            height: 70%;
+            margin: 10% auto 0;
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+            animation: scanline 2s infinite;
+        }
+
+        #liveWrap {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: none;
+        }
+
+        #liveWrap iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        @keyframes scanline {
+            0% { opacity: 0.8; }
+            50% { opacity: 1; }
+            100% { opacity: 0.8; }
+        }
+
+        .tv-container p {
+            color: #666;
+            font-size: 14px;
+            margin-top: 10px;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
         /* 聊天室样式 */
         .chat-container {
             max-width: 600px;
@@ -98,7 +159,6 @@
             color: #333;
         }
 
-        /* 清空按钮样式 */
         .clear-btn {
             text-align: right;
             padding: 5px 10px;
@@ -116,14 +176,39 @@
         <img src="/IMG_4764.jpeg" alt="漫画场景3：角色C加入团队并提出新线索" class="comic-img" />
         <img src="/IMG_4765.jpeg" alt="漫画场景4：团队发现隐藏的密室入口" class="comic-img" />
         <img src="/IMG_4809.jpeg" alt="漫画场景5：密室中出现危险陷阱" class="comic-img" />
-        <img src="/IMG_4842.jpeg" alt="漫画场景6：团队成功逃脱并庆祝胜利" class="comic-img" /> 
-        < img src="IMG_5356.jpeg" alt="漫画场景7：无
+        <img src="/IMG_4842.jpeg" alt="漫画场景6：团队成功逃脱并庆祝胜利" class="comic-img" />
+        <img src="/IMG_5356.jpeg" alt="漫画场景7：新的冒险即将开始" class="comic-img" />
     </section>
+
+    <!-- 小电视模块 -->
+    <div class="tv-container">
+        <h3>📺 小电视直播间</h3>
+        <div id="miniTv" ondblclick="toggleTV()">
+            <div id="tvScreen">
+                <!-- 直播嵌入容器 -->
+                <div id="liveWrap">
+                    <iframe 
+                        frameborder="0" 
+                        allowfullscreen="true"
+                        scrolling="no">
+                    </iframe>
+                </div>
+            </div>
+            <!-- 底座 -->
+            <div style="
+                width: 60px;
+                height: 10px;
+                background: #333;
+                border-radius: 5px;
+                margin: 8px auto 0;
+            "></div>
+        </div>
+        <p id="tvHint">当前直播：刘杨史工作室 · 漫画创作幕后花絮</p>
+    </div>
 
     <!-- 聊天室 -->
     <div class="chat-container">
         <div class="chat-messages" id="chatMessages">
-            <!-- 初始消息 -->
             <div class="message bot">欢迎来到刘杨史工作室聊天室！</div>
         </div>
         <div class="clear-btn">
@@ -136,7 +221,61 @@
     </div>
 
     <script>
-        // 页面加载时恢复聊天记录
+        // 小电视状态
+        let isTVOn = false;
+
+        // 设置你的直播房间号（替换下面的 123456）
+        const roomId = "123456"; // 🔔 替换成你的真实 Bilibili 直播间 ID
+        const iframeSrc = `//player.bilibili.com/player.html?aid=0&cid=0&bvid=0&autoplay=1&room_id=${roomId}`;
+
+        // 切换电视开关
+        function toggleTV() {
+            const liveWrap = document.getElementById("liveWrap");
+            const tvHint = document.getElementById("tvHint");
+
+            if (isTVOn) {
+                // 关机
+                liveWrap.style.display = "none";
+                tvHint.textContent = "📺 电视已关闭，双击重新开机";
+                tvHint.style.color = "#999";
+            } else {
+                // 开机
+                liveWrap.querySelector("iframe").src = iframeSrc;
+                liveWrap.style.display = "block";
+                tvHint.textContent = "正在直播：刘杨史工作室 · 漫画创作幕后花絮";
+                tvHint.style.color = "#00a1d6";
+            }
+            isTVOn = !isTVOn;
+        }
+
+        // 点击屏幕提示
+        document.getElementById("tvScreen").addEventListener("click", function () {
+            if (isTVOn) {
+                alert("📺 正在观看直播：刘杨史工作室\n📅 每周五晚8点更新创作幕后！");
+            } else {
+                alert("电视已关机，双击可开机~");
+            }
+        });
+
+        // 悬停效果
+        document.getElementById("miniTv").addEventListener("mouseenter", function () {
+            document.getElementById("tvHint").style.opacity = "1";
+        });
+        document.getElementById("miniTv").addEventListener("mouseleave", function () {
+            document.getElementById("tvHint").style.opacity = "0.7";
+        });
+
+        // 空格键开关电视（排除输入框冲突）
+        document.addEventListener("keydown", function (e) {
+            if (e.key === " " && e.target.tagName !== "INPUT" && e.target.tagName !== "TEXTAREA") {
+                e.preventDefault();
+                toggleTV();
+            }
+        });
+
+        // --------------------------
+        // 聊天室功能（原样保留）
+        // --------------------------
         window.onload = function () {
             const container = document.getElementById("chatMessages");
             const history = JSON.parse(localStorage.getItem("chatHistory")) || [];
@@ -154,10 +293,8 @@
             const message = input.value.trim();
             if (message === "") return;
 
-            // 添加用户消息
             addMessage(message, "user");
 
-            // 模拟机器人回复
             setTimeout(() => {
                 const botReply = "收到消息：" + message;
                 addMessage(botReply, "bot");
@@ -175,24 +312,18 @@
             container.appendChild(msgDiv);
             container.scrollTop = container.scrollHeight;
 
-            // 读取现有记录
             let history = JSON.parse(localStorage.getItem("chatHistory")) || [];
-            // 添加新消息
             history.push({ text, type });
-            // 限制最多保存100条记录
             if (history.length > 100) history.shift();
-            // 保存回localStorage
             localStorage.setItem("chatHistory", JSON.stringify(history));
         }
 
-        // 回车键触发发送
         document.getElementById("chatInput").addEventListener("keydown", function (e) {
             if (e.key === "Enter") {
                 sendMessage();
             }
         });
 
-        // 清空聊天记录
         function clearChatHistory() {
             if (confirm("确定要清空所有聊天记录吗？")) {
                 localStorage.removeItem("chatHistory");
