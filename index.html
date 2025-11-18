@@ -37,67 +37,6 @@
             }
         }
 
-        /* 小电视模块样式 */
-        .tv-container {
-            margin: 20px auto;
-            max-width: 600px;
-        }
-
-        .tv-container h3 {
-            color: #00a1d6;
-            margin-bottom: 10px;
-        }
-
-        #miniTv {
-            width: 180px;
-            height: 120px;
-            background: linear-gradient(145deg, #1a1a1a, #2c2c2c);
-            border: 3px solid #f0f0f0;
-            border-radius: 12px;
-            margin: 0 auto;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            cursor: pointer;
-        }
-
-        #tvScreen {
-            width: 90%;
-            height: 70%;
-            margin: 10% auto 0;
-            border-radius: 4px;
-            position: relative;
-            overflow: hidden;
-            animation: scanline 2s infinite;
-        }
-
-        #liveWrap {
-            width: 100%;
-            height: 100%;
-            background: #000;
-            display: none;
-        }
-
-        #liveWrap iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        @keyframes scanline {
-            0% { opacity: 0.8; }
-            50% { opacity: 1; }
-            100% { opacity: 0.8; }
-        }
-
-        .tv-container p {
-            color: #666;
-            font-size: 14px;
-            margin-top: 10px;
-            opacity: 0.7;
-            transition: opacity 0.3s;
-        }
-
         /* 聊天室样式 */
         .chat-container {
             max-width: 600px;
@@ -158,11 +97,6 @@
             text-align: left;
             color: #333;
         }
-
-        .clear-btn {
-            text-align: right;
-            padding: 5px 10px;
-        }
     </style>
 </head>
 <body>
@@ -177,42 +111,13 @@
         <img src="/IMG_4765.jpeg" alt="漫画场景4：团队发现隐藏的密室入口" class="comic-img" />
         <img src="/IMG_4809.jpeg" alt="漫画场景5：密室中出现危险陷阱" class="comic-img" />
         <img src="/IMG_4842.jpeg" alt="漫画场景6：团队成功逃脱并庆祝胜利" class="comic-img" />
-        <img src="/IMG_5356.jpeg" alt="漫画场景7：新的冒险即将开始" class="comic-img" />
     </section>
-
-    <!-- 小电视模块 -->
-    <div class="tv-container">
-        <h3>📺 小电视直播间</h3>
-        <div id="miniTv" ondblclick="toggleTV()">
-            <div id="tvScreen">
-                <!-- 直播嵌入容器 -->
-                <div id="liveWrap">
-                    <iframe 
-                        frameborder="0" 
-                        allowfullscreen="true"
-                        scrolling="no">
-                    </iframe>
-                </div>
-            </div>
-            <!-- 底座 -->
-            <div style="
-                width: 60px;
-                height: 10px;
-                background: #333;
-                border-radius: 5px;
-                margin: 8px auto 0;
-            "></div>
-        </div>
-        <p id="tvHint">当前直播：刘杨史工作室 · 漫画创作幕后花絮</p>
-    </div>
 
     <!-- 聊天室 -->
     <div class="chat-container">
         <div class="chat-messages" id="chatMessages">
+            <!-- 初始消息 -->
             <div class="message bot">欢迎来到刘杨史工作室聊天室！</div>
-        </div>
-        <div class="clear-btn">
-            <button onclick="clearChatHistory()">清空聊天记录</button>
         </div>
         <div class="chat-input">
             <input type="text" id="chatInput" placeholder="输入你的消息..." />
@@ -221,80 +126,15 @@
     </div>
 
     <script>
-        // 小电视状态
-        let isTVOn = false;
-
-        // 设置你的直播房间号（替换下面的 123456）
-        const roomId = "123456"; // 🔔 替换成你的真实 Bilibili 直播间 ID
-        const iframeSrc = `//player.bilibili.com/player.html?aid=0&cid=0&bvid=0&autoplay=1&room_id=${roomId}`;
-
-        // 切换电视开关
-        function toggleTV() {
-            const liveWrap = document.getElementById("liveWrap");
-            const tvHint = document.getElementById("tvHint");
-
-            if (isTVOn) {
-                // 关机
-                liveWrap.style.display = "none";
-                tvHint.textContent = "📺 电视已关闭，双击重新开机";
-                tvHint.style.color = "#999";
-            } else {
-                // 开机
-                liveWrap.querySelector("iframe").src = iframeSrc;
-                liveWrap.style.display = "block";
-                tvHint.textContent = "正在直播：刘杨史工作室 · 漫画创作幕后花絮";
-                tvHint.style.color = "#00a1d6";
-            }
-            isTVOn = !isTVOn;
-        }
-
-        // 点击屏幕提示
-        document.getElementById("tvScreen").addEventListener("click", function () {
-            if (isTVOn) {
-                alert("📺 正在观看直播：刘杨史工作室\n📅 每周五晚8点更新创作幕后！");
-            } else {
-                alert("电视已关机，双击可开机~");
-            }
-        });
-
-        // 悬停效果
-        document.getElementById("miniTv").addEventListener("mouseenter", function () {
-            document.getElementById("tvHint").style.opacity = "1";
-        });
-        document.getElementById("miniTv").addEventListener("mouseleave", function () {
-            document.getElementById("tvHint").style.opacity = "0.7";
-        });
-
-        // 空格键开关电视（排除输入框冲突）
-        document.addEventListener("keydown", function (e) {
-            if (e.key === " " && e.target.tagName !== "INPUT" && e.target.tagName !== "TEXTAREA") {
-                e.preventDefault();
-                toggleTV();
-            }
-        });
-
-        // --------------------------
-        // 聊天室功能（原样保留）
-        // --------------------------
-        window.onload = function () {
-            const container = document.getElementById("chatMessages");
-            const history = JSON.parse(localStorage.getItem("chatHistory")) || [];
-
-            history.forEach(msg => {
-                const msgDiv = document.createElement("div");
-                msgDiv.className = "message " + msg.type;
-                msgDiv.textContent = msg.text;
-                container.appendChild(msgDiv);
-            });
-        };
-
         function sendMessage() {
             const input = document.getElementById("chatInput");
             const message = input.value.trim();
             if (message === "") return;
 
+            // 添加用户消息
             addMessage(message, "user");
 
+            // 模拟机器人回复
             setTimeout(() => {
                 const botReply = "收到消息：" + message;
                 addMessage(botReply, "bot");
@@ -311,26 +151,98 @@
             msgDiv.textContent = text;
             container.appendChild(msgDiv);
             container.scrollTop = container.scrollHeight;
-
-            let history = JSON.parse(localStorage.getItem("chatHistory")) || [];
-            history.push({ text, type });
-            if (history.length > 100) history.shift();
-            localStorage.setItem("chatHistory", JSON.stringify(history));
         }
 
+        // 回车键触发发送
         document.getElementById("chatInput").addEventListener("keydown", function (e) {
             if (e.key === "Enter") {
                 sendMessage();
             }
         });
-
-        function clearChatHistory() {
-            if (confirm("确定要清空所有聊天记录吗？")) {
-                localStorage.removeItem("chatHistory");
-                document.getElementById("chatMessages").innerHTML = "";
-            }
-        }
     </script>
 
 </body>
 </html>
+<!-- 在body里添加验证界面 -->
+<div id="securityPanel" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;z-index:9999;display:none;">
+    <div style="padding:40px;text-align:center">
+        <!-- 图案锁 -->
+        <canvas id="patternLock" width="300" height="300" style="border:2px solid #ccc;border-radius:10px;margin-bottom:20px;"></canvas>
+        
+        <!-- 密码输入 -->
+        <input type="password" id="passwordInput" maxlength="6" style="width:200px;padding:10px;font-size:16px;" placeholder="请输入6位密码"/>
+        
+        <!-- 验证按钮 -->
+        <div style="margin-top:30px;">
+            <button onclick="fingerprintScan()">指纹验证</button>
+            <button onclick="faceRecognition()">面部识别</button>
+        </div>
+        
+        <!-- 提示信息 -->
+        <div id="statusMessage" style="margin-top:20px;color:#f00;"></div>
+    </div>
+</div>
+
+<!-- 在script里添加验证逻辑 -->
+<script>
+// 打开安全验证面板
+function openSecurityPanel() {
+    document.getElementById("securityPanel").style.display = "block";
+}
+
+// 验证图案锁（假设要连成工作室logo形状）
+function validatePattern(pattern) {
+    // 这里简单模拟，实际应比对绘制路径
+    return true; 
+}
+
+// 验证密码
+function validatePassword() {
+    const pass = document.getElementById("passwordInput").value;
+    if (pass === "159357") {
+        document.getElementById("statusMessage").textContent = "普通密码正确！";
+        return true;
+    } else if (pass === "123698") {
+        document.getElementById("statusMessage").textContent = "管理员密码正确！";
+        return true;
+    }
+    document.getElementById("statusMessage").textContent = "密码错误，请重试";
+    return false;
+}
+
+// 指纹验证（模拟）
+function fingerprintScan() {
+    document.getElementById("statusMessage").textContent = "指纹验证中...";
+    setTimeout(() => {
+        document.getElementById("statusMessage").textContent = "指纹验证通过！";
+    }, 1500);
+}
+
+// 面部识别（模拟）
+function faceRecognition() {
+    document.getElementById("statusMessage").textContent = "请靠近摄像头...";
+    setTimeout(() => {
+        document.getElementById("statusMessage").textContent = "面部识别通过！";
+    }, 2000);
+}
+
+// 初始化图案锁
+const canvas = document.getElementById("patternLock");
+const ctx = canvas.getContext("2d");
+ctx.strokeStyle = "#007BFF";
+ctx.lineWidth = 4;
+
+let drawing = false;
+canvas.addEventListener("mousedown", e => {
+    drawing = true;
+    ctx.beginPath();
+    ctx.moveTo(e.offsetX, e.offsetY);
+});
+canvas.addEventListener("mousemove", e => {
+    if (drawing) {
+        ctx.lineTo(e.offsetX, e.offsetY);
+        ctx.stroke();
+    }
+});
+canvas.addEventListener("mouseup", () => drawing = false);
+</script>
