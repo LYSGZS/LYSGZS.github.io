@@ -2,17 +2,78 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>刘杨史工作室 - 多格漫画</title>
+    <title>刘杨史工作室 - 密码验证</title>
     <style>
-        /* 现有样式 */
+        body {
+            margin: 0;
+            padding: 0;
+            background: #f0f2f5;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+        #securityPanel {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #ffffff;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .security-content {
+            width: 90%;
+            max-width: 360px;
+            padding: 40px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            border: 2px solid #1a73e8;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 12px 24px;
+            background: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background: #1765cc;
+        }
     </style>
 </head>
 <body>
 
-    <h1>刘杨史工作室</h1>
+    <!-- 安全验证面板 -->
+    <div id="securityPanel">
+        <div class="security-content">
+            <h2 style="color: #1a73e8;">密码验证</h2>
+            <form id="passwordForm">
+                <input type="password" id="passwordInput" placeholder="请输入密码" autocomplete="off" required>
+                <button type="submit">提交</button>
+            </form>
+        </div>
+    </div>
 
-    <!-- 多格漫画图片容器 -->
-    <section class="comic-container" role="region" aria-label="多格漫画展示">
+    <!-- 解锁后的内容 -->
+    <div id="mainContent" style="display:none; padding:20px;">
+        <h1>刘杨史工作室 - 多格漫画</h1>
+        <p>欢迎回来！您已通过密码验证。</p>
+
+       <section class="comic-container" role="region" aria-label="多格漫画展示">
         <img src="/IMG_4697.jpeg" alt="漫画场景1：角色A在森林中发现神秘符号" class="comic-img" />
         <img src="/IMG_4763.jpeg" alt="漫画场景2：角色B与角色A讨论符号含义" class="comic-img" />
         <img src="/IMG_4764.jpeg" alt="漫画场景3：角色C加入团队并提出新线索" class="comic-img" />
@@ -20,99 +81,35 @@
         <img src="/IMG_4809.jpeg" alt="漫画场景5：密室中出现危险陷阱" class="comic-img" />
         <img src="/IMG_4842.jpeg" alt="漫画场景6：团队成功逃脱并庆祝胜利" class="comic-img" />
     </section>
-        <!-- 漫画图片 -->
-    </section>
-
-    <!-- 聊天室 -->
-    <div class="chat-container">
-        <!-- 聊天室内容 -->
-    </div>
-
-    <!-- 安全验证面板 -->
-    <div id="securityPanel" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;z-index:9999;display:none;">
-        <div style="padding:40px;text-align:center">
-            <!-- 图案锁、密码输入、验证按钮、提示信息 -->
-        </div>
-    </div>
-
-    <!-- 三张图片展示区域 -->
-    <div id="imageGallery" style="display:none;">
-        <img src="path/to/image1.jpg" alt="Image 1" style="width:100%; max-width:300px; margin:10px;">
-        <img src="path/to/image2.jpg" alt="Image 2" style="width:100%; max-width:300px; margin:10px;">
-        <img src="path/to/image3.jpg" alt="Image 3" style="width:100%; max-width:300px; margin:10px;">
+        <!-- 漫画内容将在这里显示 -->
     </div>
 
     <script>
-        // 打开安全验证面板
-        function openSecurityPanel() {
-            document.getElementById("securityPanel").style.display = "block";
-        }
-
-        // 验证图案锁
-        function validatePattern(pattern) {
-            return true; 
-        }
-
-        // 验证密码
-        function validatePassword() {
-            const pass = document.getElementById("passwordInput").value;
-            if (pass === "159357" || pass === "123698") {
-                document.getElementById("statusMessage").textContent = "密码正确！";
-                return true;
-            }
-            document.getElementById("statusMessage").textContent = "密码错误，请重试";
-            return false;
-        }
-
-        // 指纹验证（模拟）
-        function fingerprintScan() {
-            document.getElementById("statusMessage").textContent = "指纹验证中...";
-            setTimeout(() => {
-                document.getElementById("statusMessage").textContent = "指纹验证通过！";
-                showImages();
-            }, 1500);
-        }
-
-        // 面部识别（模拟）
-        function faceRecognition() {
-            document.getElementById("statusMessage").textContent = "请靠近摄像头...";
-            setTimeout(() => {
-                document.getElementById("statusMessage").textContent = "面部识别通过！";
-                showImages();
-            }, 2000);
-        }
-
-        // 显示图片的函数
-        function showImages() {
-            document.getElementById("imageGallery").style.display = "block";
-            document.getElementById("securityPanel").style.display = "none";
-        }
-
-        // 初始化图案锁
-        const canvas = document.getElementById("patternLock");
-        const ctx = canvas.getContext("2d");
-        ctx.strokeStyle = "#007BFF";
-        ctx.lineWidth = 4;
-
-        let drawing = false;
-        canvas.addEventListener("mousedown", e => {
-            drawing = true;
-            ctx.beginPath();
-            ctx.moveTo(e.offsetX, e.offsetY);
-        });
-        canvas.addEventListener("mousemove", e => {
-            if (drawing) {
-                ctx.lineTo(e.offsetX, e.offsetY);
-                ctx.stroke();
+        // 预设密码
+        const CORRECT_PASSWORD = "159357"; // 可自定义密码
+        
+        // 表单提交处理
+        document.getElementById('passwordForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // 阻止默认提交行为
+            
+            const input = document.getElementById('passwordInput');
+            const password = input.value;
+            
+            if (password === CORRECT_PASSWORD) {
+                // 验证成功
+                document.getElementById('securityPanel').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+            } else {
+                // 验证失败（静默清空输入框）
+                input.value = '';
+                input.focus(); // 自动聚焦
             }
         });
-        canvas.addEventListener("mouseup", () => drawing = false);
-
-        // 页面加载时自动打开安全验证面板
-        window.onload = function() {
-            openSecurityPanel();
+        
+        // 页面加载自动聚焦
+        window.onload = () => {
+            document.getElementById('passwordInput').focus();
         };
     </script>
-
 </body>
 </html>
