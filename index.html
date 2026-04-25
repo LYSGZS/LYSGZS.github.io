@@ -13,12 +13,14 @@
         }
         /* 省略了其他样式以保持简洁 */
         
-        /* 新增聊天框样式 */
+        /* 聊天框样式 */
         #chatBox {
             border: 1px solid #ccc;
             width: 300px;
             margin-top: 20px;
-            display: none; /* 默认隐藏，​直到用户通过验证 */
+            display: none; /* 默认隐藏，直到用户通过验证 */
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         #chatMessages {
             height: 200px;
@@ -31,49 +33,72 @@
             padding: 10px;
             border: none;
             border-top: 1px solid #ccc;
+            outline: none;
+        }
+        #chatInput:focus {
+            background-color: #f0f0f0;
         }
     </style>
 </head>
 <body>
 
 <div id="securityPanel">
-    <!-- 安全验证面板保持不变 -->
+    <!-- 这里是你原有的安全验证面板代码 -->
+    <!-- 为了演示，我放了一个简单的占位，请保留你原有的验证表单 -->
+    <div style="text-align: center; padding: 50px;">
+        <h2>请输入密码</h2>
+        <form id="passwordForm">
+            <input type="password" id="passwordInput" placeholder="请输入密码">
+            <button type="submit">验证</button>
+        </form>
+    </div>
 </div>
 
 <!-- 解锁后的内容 -->
 <div id="mainContent" style="display:none; padding:20px;">
     <h1>刘杨史工作室 - 多格漫画</h1>
-    <p>欢迎回来！​您已通过密码验证。​</p>
+    <p>欢迎回来！您已通过密码验证。</p>
     <!-- 漫画内容将在这里显示 -->
 
     <!-- 聊天框 -->
     <div id="chatBox">
         <div id="chatMessages"></div>
         <input type="text" id="chatInput" placeholder="输入消息..." onkeypress="if(event.key === 'Enter') sendMessage()">
-        <button onclick="sendMessage()">发送</button>
     </div>
 </div>
 
 <!-- 错误对话框保持不变 -->
 
 <script>
-    // 预设密码和表单提交处理保持不变
+    // 预设密码 (请在这里设置你的正确密码)
+    const CORRECT_PASSWORD = "123456"; 
 
     // 发送消息函数
     function sendMessage() {
         const input = document.getElementById('chatInput');
         const message = input.value.trim();
+        
         if (message.length > 0) {
             const chatMessages = document.getElementById('chatMessages');
             const newMessage = document.createElement('p');
-            newMessage.textContent = message;
+            newMessage.textContent = "我: " + message;
+            newMessage.style.color = "#333";
+            newMessage.style.margin = "5px 0";
             chatMessages.appendChild(newMessage);
+            
             input.value = '';
             chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            // --- 新增代码：检测特定指令 ---
+            if (message === "tV.hzfe.org") {
+                // 这里执行跳转，你可以把链接换成你想要的任何地址
+                // 为了演示，我使用了搜索链接，你可以改为具体的视频地址
+                window.open("https://www.bing.com/search?q=小电视"); 
+            }
         }
     }
 
-    // 表单提交处理增加显示聊天框逻辑
+    // 表单提交处理
     document.getElementById('passwordForm').addEventListener('submit', function(e) {
         e.preventDefault(); 
         const input = document.getElementById('passwordInput');
@@ -85,12 +110,9 @@
             document.getElementById('chatBox').style.display = 'block'; // 显示聊天框
         } else {
             input.value = '';
-            showErrorMessage();
+            alert("密码错误，请重试！");
         }
     });
-
-    // 其他JavaScript保持不变
 </script>
 </body>
 </html>
-
